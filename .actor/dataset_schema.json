@@ -1,30 +1,25 @@
 {
   "actorSpecification": 1,
-  "fields": [
-    {
-      "name": "success",
+  "fields": {
+    "success": {
       "type": "boolean",
       "description": "Whether the order was successful"
     },
-    {
-      "name": "message",
+    "message": {
       "type": "string",
       "description": "Status message"
     },
-    {
-      "name": "order",
+    "order": {
       "type": "object",
-      "description": "Order details"
+      "description": "Order details including ID, price, status, and delivery info"
     },
-    {
-      "name": "next_steps",
+    "next_steps": {
       "type": "array",
       "description": "Next steps after placing order"
     },
-    {
-      "name": "support",
+    "support": {
       "type": "string",
-      "description": "Support email"
+      "description": "Support email address"
     }
-  ]
+  }
 }
