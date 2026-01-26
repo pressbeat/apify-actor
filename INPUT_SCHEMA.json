@@ -1,0 +1,55 @@
+{
+  "title": "PressBeat - Order Guaranteed Article",
+  "description": "Order a guaranteed published article for your brand with do-follow backlinks.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "plan": {
+      "title": "Plan",
+      "type": "string",
+      "description": "Choose your article plan",
+      "enum": ["standard", "premium"],
+      "enumTitles": [
+        "Standard ($500) - DR30+ minimum, DR70 average",
+        "Premium ($2,000) - DR50+ minimum, DR70 average"
+      ],
+      "default": "standard",
+      "editor": "select"
+    },
+    "website_url": {
+      "title": "Website URL",
+      "type": "string",
+      "description": "Your company/brand website URL. This is where the article will link to.",
+      "editor": "textfield",
+      "prefill": "https://example.com"
+    },
+    "email": {
+      "title": "Email",
+      "type": "string",
+      "description": "Your email address. We'll send order confirmation and updates here.",
+      "editor": "textfield"
+    },
+    "topic": {
+      "title": "Article Topic (Optional)",
+      "type": "string",
+      "description": "Preferred topic or angle for the article. Leave empty for us to choose the best angle.",
+      "editor": "textarea",
+      "nullable": true
+    },
+    "country": {
+      "title": "Target Country (Optional)",
+      "type": "string",
+      "description": "Preferred country for publication (e.g., 'US', 'UK', 'France'). Leave empty for global.",
+      "editor": "textfield",
+      "nullable": true
+    },
+    "notes": {
+      "title": "Additional Notes (Optional)",
+      "type": "string",
+      "description": "Any additional information or special requests.",
+      "editor": "textarea",
+      "nullable": true
+    }
+  },
+  "required": ["plan", "website_url", "email"]
+}
