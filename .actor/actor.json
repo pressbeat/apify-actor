@@ -3,7 +3,7 @@
   "name": "pressbeat-guaranteed-article",
   "title": "PressBeat - Guaranteed Press Article ($500)",
   "description": "Order a guaranteed published article for your brand. $500 for DR30+ publication with do-follow backlink. 90-day money-back guarantee.",
-  "version": "1.0.2",
+  "version": "1.0",
   "buildTag": "latest",
   "input": "./input_schema.json",
   "output": "./output_schema.json",
