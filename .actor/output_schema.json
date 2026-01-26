@@ -1,0 +1,13 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "PressBeat Order Results",
+  "description": "Order confirmation and details for your guaranteed article",
+  "type": "object",
+  "properties": {
+    "orderDetails": {
+      "type": "string",
+      "title": "Order Details",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}

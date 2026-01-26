@@ -1,0 +1,66 @@
+{
+  "actorDatasetSchemaVersion": 1,
+  "title": "PressBeat Order",
+  "description": "Order details for your guaranteed article",
+  "views": {
+    "order": {
+      "title": "Order Summary",
+      "description": "Your order confirmation",
+      "transformation": {
+        "fields": [
+          "success",
+          "message",
+          "order.id",
+          "order.price",
+          "order.website_url",
+          "order.status",
+          "order.estimated_delivery",
+          "order.guarantee",
+          "order.publication_quality"
+        ],
+        "flatten": ["order"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "success": {
+            "label": "Status",
+            "format": "boolean"
+          },
+          "message": {
+            "label": "Message",
+            "format": "text"
+          },
+          "id": {
+            "label": "Order ID",
+            "format": "text"
+          },
+          "price": {
+            "label": "Price",
+            "format": "number"
+          },
+          "website_url": {
+            "label": "Website",
+            "format": "link"
+          },
+          "status": {
+            "label": "Order Status",
+            "format": "text"
+          },
+          "estimated_delivery": {
+            "label": "Delivery",
+            "format": "text"
+          },
+          "guarantee": {
+            "label": "Guarantee",
+            "format": "text"
+          },
+          "publication_quality": {
+            "label": "Publication Quality",
+            "format": "text"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,8 @@
 {
   "name": "pressbeat-apify-actor",
-  "version": "1.0.0",
-  "description": "Order guaranteed press articles for your brand. Standard ($500, DR30+) or Premium ($2,000, DR50+) with 90-day money-back guarantee.",
+  "version": "1.0.2",
+  "type": "module",
+  "description": "Order a guaranteed press article for your brand. $500 for DR30+ publication with do-follow backlink. 90-day money-back guarantee.",
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
