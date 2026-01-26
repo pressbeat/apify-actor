@@ -1,9 +1,9 @@
 {
   "actorSpecification": 1,
   "name": "pressbeat-guaranteed-article",
-  "title": "PressBeat - Guaranteed Press Article",
-  "description": "Order a guaranteed published article for your brand. Standard ($500, DR30+) or Premium ($2,000, DR50+). 90-day money-back guarantee. Do-follow backlinks included.",
-  "version": "1.0.0",
+  "title": "PressBeat - Guaranteed Press Article ($500)",
+  "description": "Order a guaranteed published article for your brand. $500 for DR30+ publication with do-follow backlink. 90-day money-back guarantee.",
+  "version": "1.0.1",
   "buildTag": "latest",
   "minMemoryMbytes": 256,
   "maxMemoryMbytes": 512,
@@ -11,7 +11,7 @@
     "RESEND_API_KEY": {
       "description": "Resend API key for sending notification emails"
     },
-    "NOTIFICATION_EMAIL": {
+    "FROM_NOTIFICATIONS_EMAIL": {
       "description": "Email to receive order notifications",
       "default": "kevin@pressbeat.io"
     }

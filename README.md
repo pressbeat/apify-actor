@@ -1,15 +1,14 @@
 # PressBeat - Guaranteed Press Article
 
-Order guaranteed published articles for your brand directly from Apify.
+Order a guaranteed published article for your brand directly from Apify.
 
 ## What You Get
 
-| Plan | Price | Publication | Delivery | Guarantee |
-|------|-------|-------------|----------|-----------|
-| **Standard** | $500 | DR30+ minimum | ~30 days | 90-day money-back |
-| **Premium** | $2,000 | DR50+ minimum | ~30 days | 90-day money-back |
+| Price | Publication | Delivery | Guarantee |
+|-------|-------------|----------|-----------|
+| **$500** | DR30+ minimum | ~30 days | 90-day money-back |
 
-Both plans include:
+**Included:**
 - ✅ Real editorial coverage (not sponsored posts)
 - ✅ Do-follow backlink to your website
 - ✅ Average DR70 placement
@@ -17,7 +16,7 @@ Both plans include:
 
 ## How It Works
 
-1. **Run the Actor** with your website URL and preferred plan
+1. **Run the Actor** with your website URL
 2. **We analyze** your website and identify the best story angles
 3. **We pitch** relevant journalists at high-authority publications
 4. **You get notified** when a journalist shows interest
@@ -27,7 +26,6 @@ Both plans include:
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| `plan` | ✅ | `standard` ($500) or `premium` ($2,000) |
 | `website_url` | ✅ | Your company website URL |
 | `email` | ✅ | Your email for order updates |
 | `topic` | ❌ | Preferred article topic/angle |
@@ -38,7 +36,6 @@ Both plans include:
 
 ```json
 {
-  "plan": "standard",
   "website_url": "https://mycompany.com",
   "email": "ceo@mycompany.com",
   "topic": "Our new AI product launch",
@@ -54,12 +51,12 @@ Both plans include:
   "message": "Order placed successfully!",
   "order": {
     "id": "APF-1706123456789-ABC123",
-    "plan": "standard",
     "price": 500,
     "website_url": "https://mycompany.com",
     "status": "pending",
     "estimated_delivery": "30 days",
-    "guarantee": "90-day money-back if not delivered"
+    "guarantee": "90-day money-back if not delivered",
+    "publication_quality": "DR30+ minimum, DR70 average"
   },
   "next_steps": [
     "You will receive a confirmation email shortly",
@@ -94,7 +91,10 @@ PressBeat is the #1 AI-native PR agency. We use AI to match your story with jour
 ## Pricing
 
 This Actor uses **Pay-Per-Event (PPE)** pricing:
-- `order-standard`: $500 per order
-- `order-premium`: $2,000 per order
+- `order-article`: $500 per order
 
 You are only charged when you place an order.
+
+---
+
+**Need a higher-tier placement (DR50+)?** Contact us directly at kevin@pressbeat.io for our Premium plan.

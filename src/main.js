@@ -2,26 +2,18 @@
  * PressBeat - Guaranteed Press Article Actor
  * 
  * Order guaranteed published articles for your brand.
- * Standard ($500, DR30+) or Premium ($2,000, DR50+).
+ * $500 for DR30+ publication with do-follow backlink.
  * 90-day money-back guarantee.
  */
 
 import { Actor } from 'apify';
 
-// Pricing configuration
+// Pricing configuration (single plan only due to Apify $500 limit)
 const PRICING = {
-  standard: {
-    price: 500,
-    event: 'order-standard',
-    description: 'Standard article (DR30+ minimum, DR70 average)',
-    deliveryDays: 30,
-  },
-  premium: {
-    price: 2000,
-    event: 'order-premium',
-    description: 'Premium article (DR50+ minimum, DR70 average)',
-    deliveryDays: 30,
-  },
+  price: 500,
+  event: 'order-article',
+  description: 'Guaranteed article (DR30+ minimum, DR70 average)',
+  deliveryDays: 30,
 };
 
 /**
@@ -29,7 +21,7 @@ const PRICING = {
  */
 async function sendNotificationEmail(orderDetails) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const notificationEmail = process.env.NOTIFICATION_EMAIL || 'kevin@pressbeat.io';
+  const notificationEmail = process.env.FROM_NOTIFICATIONS_EMAIL || 'kevin@pressbeat.io';
 
   if (!resendApiKey) {
     console.log('[PressBeat] RESEND_API_KEY not configured, skipping email notification');
@@ -37,8 +29,7 @@ async function sendNotificationEmail(orderDetails) {
     return;
   }
 
-  const { plan, website_url, email, topic, country, notes, orderId, timestamp } = orderDetails;
-  const planInfo = PRICING[plan];
+  const { website_url, email, topic, country, notes, orderId, timestamp } = orderDetails;
 
   const emailHtml = `
 <!DOCTYPE html>
@@ -53,9 +44,9 @@ async function sendNotificationEmail(orderDetails) {
     
     <div style="background: #f1f5f9; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
       <p style="margin: 0; font-size: 24px; font-weight: bold; color: #0f172a;">
-        ${plan.toUpperCase()} - $${planInfo.price}
+        GUARANTEED ARTICLE - $${PRICING.price}
       </p>
-      <p style="margin: 8px 0 0 0; color: #64748b;">${planInfo.description}</p>
+      <p style="margin: 8px 0 0 0; color: #64748b;">${PRICING.description}</p>
     </div>
 
     <h2 style="color: #0f172a; font-size: 16px; margin: 24px 0 12px 0;">Customer Details</h2>
@@ -111,7 +102,7 @@ async function sendNotificationEmail(orderDetails) {
       body: JSON.stringify({
         from: 'PressBeat Apify <apify@pressbeat.io>',
         to: notificationEmail,
-        subject: `🎉 New Apify Order: ${plan.toUpperCase()} ($${planInfo.price}) - ${website_url}`,
+        subject: `🎉 New Apify Order: $${PRICING.price} - ${website_url}`,
         html: emailHtml,
       }),
     });
@@ -136,8 +127,7 @@ async function sendCustomerConfirmation(orderDetails) {
     return;
   }
 
-  const { plan, website_url, email, orderId } = orderDetails;
-  const planInfo = PRICING[plan];
+  const { website_url, email, orderId } = orderDetails;
 
   const emailHtml = `
 <!DOCTYPE html>
@@ -157,17 +147,17 @@ async function sendCustomerConfirmation(orderDetails) {
     <div style="background: #f1f5f9; border-radius: 8px; padding: 16px; margin: 24px 0;">
       <p style="margin: 0 0 8px 0; font-size: 14px; color: #64748b;">Your Order</p>
       <p style="margin: 0; font-size: 20px; font-weight: bold; color: #0f172a;">
-        ${plan.charAt(0).toUpperCase() + plan.slice(1)} Article - $${planInfo.price}
+        Guaranteed Article - $${PRICING.price}
       </p>
       <p style="margin: 8px 0 0 0; color: #64748b; font-size: 14px;">
-        ${planInfo.description}
+        ${PRICING.description}
       </p>
     </div>
 
     <h2 style="color: #0f172a; font-size: 16px; margin: 24px 0 12px 0;">What happens next?</h2>
     <ol style="color: #334155; line-height: 1.8; padding-left: 20px;">
       <li>We analyze your website and identify the best story angles</li>
-      <li>We pitch relevant journalists at DR${plan === 'premium' ? '50' : '30'}+ publications</li>
+      <li>We pitch relevant journalists at DR30+ publications</li>
       <li>Once a journalist is interested, we'll notify you</li>
       <li>Your article goes live with a do-follow backlink</li>
     </ol>
@@ -202,8 +192,8 @@ async function sendCustomerConfirmation(orderDetails) {
       body: JSON.stringify({
         from: 'PressBeat <orders@pressbeat.io>',
         to: email,
-        bcc: process.env.NOTIFICATION_EMAIL || 'kevin@pressbeat.io',
-        subject: `Your PressBeat order is confirmed! (${plan.charAt(0).toUpperCase() + plan.slice(1)} Article)`,
+        bcc: process.env.FROM_NOTIFICATIONS_EMAIL || 'kevin@pressbeat.io',
+        subject: `Your PressBeat order is confirmed! (Guaranteed Article)`,
         html: emailHtml,
       }),
     });
@@ -227,12 +217,9 @@ try {
     throw new Error('No input provided');
   }
 
-  const { plan, website_url, email, topic, country, notes } = input;
+  const { website_url, email, topic, country, notes } = input;
 
   // Validate required fields
-  if (!plan || !['standard', 'premium'].includes(plan)) {
-    throw new Error('Invalid plan. Must be "standard" or "premium".');
-  }
   if (!website_url) {
     throw new Error('Website URL is required.');
   }
@@ -240,23 +227,21 @@ try {
     throw new Error('Email is required.');
   }
 
-  const planInfo = PRICING[plan];
+  console.log(`[PressBeat] Processing order for ${website_url}`);
 
-  console.log(`[PressBeat] Processing ${plan} order for ${website_url}`);
-
-  // Charge the appropriate event
+  // Charge the event
   const chargeResult = await Actor.charge({
-    eventName: planInfo.event,
+    eventName: PRICING.event,
   });
 
-  console.log(`[PressBeat] Charged event: ${planInfo.event}`);
+  console.log(`[PressBeat] Charged event: ${PRICING.event}`);
 
   // Check if charge was successful
   if (chargeResult.eventChargeLimitReached) {
     console.log('[PressBeat] User spending limit reached');
     await Actor.pushData({
       success: false,
-      error: 'Spending limit reached. Please increase your limit in Apify settings.',
+      error: 'Spending limit reached. Please increase your limit in Apify settings to at least $500.',
     });
     await Actor.exit();
   }
@@ -268,13 +253,12 @@ try {
   // Order details
   const orderDetails = {
     orderId,
-    plan,
     website_url,
     email,
     topic: topic || null,
     country: country || null,
     notes: notes || null,
-    price: planInfo.price,
+    price: PRICING.price,
     source: 'apify',
     timestamp,
   };
@@ -291,12 +275,12 @@ try {
     message: 'Order placed successfully!',
     order: {
       id: orderId,
-      plan: plan,
-      price: planInfo.price,
+      price: PRICING.price,
       website_url,
       status: 'pending',
-      estimated_delivery: `${planInfo.deliveryDays} days`,
+      estimated_delivery: `${PRICING.deliveryDays} days`,
       guarantee: '90-day money-back if not delivered',
+      publication_quality: 'DR30+ minimum, DR70 average',
     },
     next_steps: [
       'You will receive a confirmation email shortly',

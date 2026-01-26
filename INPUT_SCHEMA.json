@@ -1,21 +1,9 @@
 {
   "title": "PressBeat - Order Guaranteed Article",
-  "description": "Order a guaranteed published article for your brand with do-follow backlinks.",
+  "description": "Order a guaranteed published article for your brand with do-follow backlinks. $500 for DR30+ publication.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "plan": {
-      "title": "Plan",
-      "type": "string",
-      "description": "Choose your article plan",
-      "enum": ["standard", "premium"],
-      "enumTitles": [
-        "Standard ($500) - DR30+ minimum, DR70 average",
-        "Premium ($2,000) - DR50+ minimum, DR70 average"
-      ],
-      "default": "standard",
-      "editor": "select"
-    },
     "website_url": {
       "title": "Website URL",
       "type": "string",
@@ -51,5 +39,5 @@
       "nullable": true
     }
   },
-  "required": ["plan", "website_url", "email"]
+  "required": ["website_url", "email"]
 }
